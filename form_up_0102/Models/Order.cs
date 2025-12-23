@@ -19,11 +19,11 @@ public partial class Order
 
     public int IdStatuses { get; set; }
 
-    public virtual DeliveryPoint IdDeliveryPointNavigation { get; set; } = null!;
+    public virtual DeliveryPoint DeliveryPoints { get; set; } = null!;
 
-    public virtual Status IdStatusesNavigation { get; set; } = null!;
+    public virtual Status Statuses { get; set; } = null!;
 
-    public virtual User IdUserNavigation { get; set; } = null!;
+    public virtual User Users { get; set; } = null!;
 
     public virtual ICollection<ProductsOrder> ProductsOrders { get; set; } = new List<ProductsOrder>();
 }

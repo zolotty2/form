@@ -19,7 +19,7 @@ public partial class User
 
     public string Pass { get; set; } = null!;
 
-    public virtual Role IdRoleNavigation { get; set; } = null!;
+    public virtual Role Roles { get; set; } = null!;
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }
