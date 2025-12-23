@@ -29,15 +29,15 @@ public partial class Product
 
     public string? PhotoUrl { get; set; }
 
-    public virtual Category Categores { get; set; } = null!;
+    public virtual Category Category { get; set; } = null!;
 
-    public virtual Manufacturer Manufacturers { get; set; } = null!;
+    public virtual Manufacturer Manufacturer { get; set; } = null!;
 
-    public virtual Measure Measures { get; set; } = null!;
+    public virtual Measure Measure { get; set; } = null!;
 
-    public virtual Supplier Suppliers { get; set; } = null!;
+    public virtual Supplier Supplier { get; set; } = null!;
 
-    public virtual ProductType ProductTypes { get; set; } = null!;
+    public virtual ProductType ProductType { get; set; } = null!;
 
     public virtual ICollection<ProductsOrder> ProductsOrders { get; set; } = new List<ProductsOrder>();
 }

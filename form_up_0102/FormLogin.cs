@@ -16,7 +16,7 @@ namespace form_up_0102
         {
             if (String.IsNullOrWhiteSpace(txtLogin.Text) || string.IsNullOrWhiteSpace(txtPassword.Text))
             {
-                MessageBox.Show("¬ведите логи или пароль", "Jшибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("¬ведите логи или пароль", "ќшибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             using (var db = new ShoeShopDbContext())
             {

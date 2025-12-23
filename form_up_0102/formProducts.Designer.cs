@@ -30,7 +30,7 @@
         {
             paneltop = new Panel();
             lblUserName = new Label();
-            btnLogin = new Button();
+            btnLogout = new Button();
             dgvProducts = new DataGridView();
             paneltop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
@@ -39,7 +39,7 @@
             // paneltop
             // 
             paneltop.Controls.Add(lblUserName);
-            paneltop.Controls.Add(btnLogin);
+            paneltop.Controls.Add(btnLogout);
             paneltop.Dock = DockStyle.Top;
             paneltop.Location = new Point(10, 10);
             paneltop.Name = "paneltop";
@@ -58,18 +58,19 @@
             lblUserName.Text = "label1";
             lblUserName.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // btnLogin
+            // btnLogout
             // 
-            btnLogin.BackColor = Color.MediumSpringGreen;
-            btnLogin.Dock = DockStyle.Right;
-            btnLogin.FlatAppearance.BorderSize = 0;
-            btnLogin.FlatStyle = FlatStyle.Flat;
-            btnLogin.Location = new Point(814, 0);
-            btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(150, 30);
-            btnLogin.TabIndex = 5;
-            btnLogin.Text = "Войти";
-            btnLogin.UseVisualStyleBackColor = false;
+            btnLogout.BackColor = Color.White;
+            btnLogout.Dock = DockStyle.Right;
+            btnLogout.FlatAppearance.BorderSize = 0;
+            btnLogout.FlatStyle = FlatStyle.Flat;
+            btnLogout.Location = new Point(814, 0);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(150, 30);
+            btnLogout.TabIndex = 5;
+            btnLogout.Text = "Выйти";
+            btnLogout.UseVisualStyleBackColor = false;
+            btnLogout.Click += btnLogout_Click;
             // 
             // dgvProducts
             // 
@@ -112,6 +113,6 @@
         private Panel paneltop;
         private DataGridView dgvProducts;
         private Label lblUserName;
-        private Button btnLogin;
+        private Button btnLogout;
     }
 }

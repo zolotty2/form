@@ -44,21 +44,22 @@ namespace form_up_0102
 
             lblUserName.Text = IsGuest ? "гость" : CurretUser.fullName;
             LoadProducts();
-            }
-            
-            
-        private void LoadProducts(){
+        }
+
+
+        private void LoadProducts()
+        {
             try
             {
                 using (var db = new ShoeShopDbContext())
                 {
                     var products = db.Products
-                        .Include(i => i.Categores)
-                        .Include(i => i.Manufacturers)
-                        .Include(i => i.Suppliers)
-                        .Include(i => i.Measures)
+                        .Include(i => i.Category)
+                        .Include(i => i.Manufacturer)
+                        .Include(i => i.Supplier)
+                        .Include(i => i.Measure)
                         .ToList();
-                    
+
                     dgvProducts.SuspendLayout();
                     dgvProducts.Rows.Clear();
                     foreach (var product in products)
@@ -67,16 +68,47 @@ namespace form_up_0102
                         var row = dgvProducts.Rows[rowIndex];
 
                         row.Cells["colPhoto"].Value = LoadProductImage(product.PhotoUrl);
+
                         row.Cells["colInfo"].Value = FormatProductInfo(product);
+
+                        row.Cells["colDiscount"].Value = $"{product.Discount}%";
+                        row.Cells["colDiscount"].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                        ApplyRowStyles(row, product);
                     }
 
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка загрузки: {ex.Message}","Ошибка",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show($"Ошибка загрузки: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-                
+
+        }
+
+        private void ApplyRowStyles(DataGridViewRow row, Product product)
+        {
+            if (product.Discount > 15)
+            {
+                row.DefaultCellStyle.BackColor = ColorTranslator.FromHtml("#2E8B57");
+                row.DefaultCellStyle.ForeColor = Color.White;
+            }
+            if (product.CointInStock <= 0)
+            {
+                row.DefaultCellStyle.ForeColor = Color.LightBlue;
+
+                if (product.Discount <= 15)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Black;
+                }
+            }
+            if (product.Discount > 0)
+            {
+                row.Cells["colDiscount"].Style.ForeColor = Color.Red;
+                row.Cells["colDiscount"].Style.Font = new Font(
+                    "Times New Roman",
+                    12,
+                    FontStyle.Bold);
+            }
         }
 
         private string FormatProductInfo(Product product)
@@ -84,36 +116,46 @@ namespace form_up_0102
             string priceText;
             if (product.Discount > 0)
             {
-                decimal finalProce = product.Price* (100 - product.Discount)/100;
-                priceText = $"Цена {product.Price:C} -> { finalProce:C}";
+                decimal finalProce = product.Price * (100 - product.Discount) / 100;
+                priceText = $"Цена {product.Price:C} -> {finalProce:C}";
             }
-            else  
+            else
             {
                 priceText = $"Цена {product.Price:C}";
             }
-            return $"Категория товара: {product.Description}| {product.ProductTypes}" + Environment.NewLine +
-                $"Информация о производителе:{product.Manufacturers}" + Environment.NewLine +
-                $"Поставщик:{product.Suppliers.SupplierName}" + Environment.NewLine +
+            return $"Категория товара: {product.Description}| {product.ProductType}" + Environment.NewLine +
+                $"Информация о производителе:{product.Manufacturer}" + Environment.NewLine +
+                $"Поставщик:{product.Supplier.SupplierName}" + Environment.NewLine +
                 $"Цена товара:{priceText}" + Environment.NewLine +
-                $"Еденица измерения:{product.Measures.MeasureName}" + Environment.NewLine +
+                $"Еденица измерения:{product.Measure.MeasureName}" + Environment.NewLine +
                 $"Количество на складе:{product.CointInStock}";
         }
 
         private Image LoadProductImage(string photoUrl)
+        {
+            if (!String.IsNullOrEmpty(photoUrl) && System.IO.File.Exists(photoUrl))
             {
-                if (!String.IsNullOrEmpty(photoUrl)&& System.IO.File.Exists(photoUrl))
-                {
-                    return Image.FromFile(photoUrl);
-                }
-                Bitmap bmp = new Bitmap(150,100);
-                using (Graphics g = Graphics.FromImage(bmp))
-                {
-                    g.Clear(Color.White);
-                    g.DrawRectangle(Pens.LightGray, 0, 0, 149, 99);
-                    
-                }
+                return Image.FromFile(photoUrl);
+            }
+            Bitmap bmp = new Bitmap(150, 100);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.Clear(Color.White);
+                g.DrawRectangle(Pens.LightGray, 0, 0, 149, 99);
+
+            }
 
             return Resources.Picture;
-            }
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();  
+        }
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+        }
     }
 }

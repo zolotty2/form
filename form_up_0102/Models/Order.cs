@@ -17,13 +17,13 @@ public partial class Order
 
     public int Code { get; set; }
 
-    public int IdStatuses { get; set; }
+    public int IdStatus { get; set; } 
 
-    public virtual DeliveryPoint DeliveryPoints { get; set; } = null!;
+    public virtual DeliveryPoint DeliveryPoint { get; set; } = null!;
 
-    public virtual Status Statuses { get; set; } = null!;
+    public virtual Status Status { get; set; } = null!; 
 
-    public virtual User Users { get; set; } = null!;
+    public virtual User User { get; set; } = null!; 
 
     public virtual ICollection<ProductsOrder> ProductsOrders { get; set; } = new List<ProductsOrder>();
 }

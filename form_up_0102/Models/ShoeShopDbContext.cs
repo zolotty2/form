@@ -40,7 +40,6 @@ public partial class ShoeShopDbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=shoe_shop_db;Username=postgres;Password=1111");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -95,19 +94,22 @@ public partial class ShoeShopDbContext : DbContext
             entity.Property(e => e.Code).HasColumnName("code");
             entity.Property(e => e.DeliveryDate).HasColumnName("delivery_date");
             entity.Property(e => e.IdDeliveryPoint).HasColumnName("id_delivery_point");
-            entity.Property(e => e.IdStatuses).HasColumnName("id_statuses");
+            entity.Property(e => e.IdStatus).HasColumnName("id_statuses"); // Исправлено с IdStatuses
             entity.Property(e => e.IdUser).HasColumnName("id_user");
             entity.Property(e => e.OrderDate).HasColumnName("order_date");
 
-            entity.HasOne(d => d.IdDeliveryPointNavigation).WithMany(p => p.Orders)
+            entity.HasOne(d => d.DeliveryPoint)
+                .WithMany(p => p.Orders)
                 .HasForeignKey(d => d.IdDeliveryPoint)
                 .HasConstraintName("orders_id_delivery_point_fkey");
 
-            entity.HasOne(d => d.IdStatusesNavigation).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.IdStatuses)
+            entity.HasOne(d => d.Status)
+                .WithMany(p => p.Orders)
+                .HasForeignKey(d => d.IdStatus)
                 .HasConstraintName("orders_id_statuses_fkey");
 
-            entity.HasOne(d => d.IdUserNavigation).WithMany(p => p.Orders)
+            entity.HasOne(d => d.User)
+                .WithMany(p => p.Orders)
                 .HasForeignKey(d => d.IdUser)
                 .HasConstraintName("orders_id_user_fkey");
         });
@@ -133,23 +135,28 @@ public partial class ShoeShopDbContext : DbContext
                 .HasColumnType("money")
                 .HasColumnName("price");
 
-            entity.HasOne(d => d.IdCategoryNavigation).WithMany(p => p.Products)
+            entity.HasOne(d => d.Category)
+                .WithMany(p => p.Products)
                 .HasForeignKey(d => d.IdCategory)
                 .HasConstraintName("products_id_category_fkey");
 
-            entity.HasOne(d => d.IdManufacturerNavigation).WithMany(p => p.Products)
+            entity.HasOne(d => d.Manufacturer)
+                .WithMany(p => p.Products)
                 .HasForeignKey(d => d.IdManufacturer)
                 .HasConstraintName("products_id_manufacturer_fkey");
 
-            entity.HasOne(d => d.IdMeasureNavigation).WithMany(p => p.Products)
+            entity.HasOne(d => d.Measure)
+                .WithMany(p => p.Products)
                 .HasForeignKey(d => d.IdMeasure)
                 .HasConstraintName("products_id_measure_fkey");
 
-            entity.HasOne(d => d.IdSupplierNavigation).WithMany(p => p.Products)
+            entity.HasOne(d => d.Supplier)
+                .WithMany(p => p.Products)
                 .HasForeignKey(d => d.IdSupplier)
                 .HasConstraintName("products_id_supplier_fkey");
 
-            entity.HasOne(d => d.IdTypeNavigation).WithMany(p => p.Products)
+            entity.HasOne(d => d.ProductType)
+                .WithMany(p => p.Products)
                 .HasForeignKey(d => d.IdType)
                 .HasConstraintName("products_id_type_fkey");
         });
@@ -175,11 +182,13 @@ public partial class ShoeShopDbContext : DbContext
             entity.Property(e => e.IdProduct).HasColumnName("id_product");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
 
-            entity.HasOne(d => d.IdOrderNavigation).WithMany(p => p.ProductsOrders)
+            entity.HasOne(d => d.Order)
+                .WithMany(p => p.ProductsOrders)
                 .HasForeignKey(d => d.IdOrder)
                 .HasConstraintName("products_orders_id_order_fkey");
 
-            entity.HasOne(d => d.IdProductNavigation).WithMany(p => p.ProductsOrders)
+            entity.HasOne(d => d.Product)
+                .WithMany(p => p.ProductsOrders)
                 .HasForeignKey(d => d.IdProduct)
                 .HasConstraintName("products_orders_id_product_fkey");
         });
@@ -228,7 +237,8 @@ public partial class ShoeShopDbContext : DbContext
             entity.Property(e => e.MiddleName).HasColumnName("middle_name");
             entity.Property(e => e.Pass).HasColumnName("pass");
 
-            entity.HasOne(d => d.IdRoleNavigation).WithMany(p => p.Users)
+            entity.HasOne(d => d.Role)
+                .WithMany(p => p.Users)
                 .HasForeignKey(d => d.IdRole)
                 .HasConstraintName("users_id_role_fkey");
         });
