@@ -77,6 +77,7 @@
             btnGuest.TabIndex = 5;
             btnGuest.Text = "Войти как гость";
             btnGuest.UseVisualStyleBackColor = false;
+            btnGuest.Click += btnGuest_Click;
             // 
             // btnLogin
             // 

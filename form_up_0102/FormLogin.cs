@@ -16,11 +16,11 @@ namespace form_up_0102
         {
             if (String.IsNullOrWhiteSpace(txtLogin.Text) || string.IsNullOrWhiteSpace(txtPassword.Text))
             {
-                MessageBox.Show("¬ведите логи или пароль","Jшибка",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                MessageBox.Show("¬ведите логи или пароль", "Jшибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            using(var db = new ShoeShopDbContext())
+            using (var db = new ShoeShopDbContext())
             {
-                var user = db.Users.Where(w=>w.Login == txtLogin.Text && w.Pass==txtPassword.Text).FirstOrDefault();
+                var user = db.Users.Where(w => w.Login == txtLogin.Text && w.Pass == txtPassword.Text).FirstOrDefault();
                 if (user != null)
                 {
                     CurretUser = user;
@@ -34,6 +34,14 @@ namespace form_up_0102
                 }
             }
 
+        }
+
+        private void btnGuest_Click(object sender, EventArgs e)
+        {
+            CurretUser = null;
+            IsGuest = true;
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }
