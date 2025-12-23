@@ -11,12 +11,12 @@ using System.Windows.Forms;
 
 namespace form_up_0102
 {
-    public partial class formProducts : Form
+    public partial class FormProducts : Form
     {
         public User CurretUser { get; private set; }
         public bool IsGuest { get; private set; }
 
-        public formProducts(User user, bool IsGuest)
+        public FormProducts(User user, bool IsGuest)
         {
             InitializeComponent();
             var colPhoto = new DataGridViewImageColumn();
@@ -75,7 +75,8 @@ namespace form_up_0102
                         row.Cells["colDiscount"].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                         ApplyRowStyles(row, product);
                     }
-
+                    dgvProducts.ResumeLayout();
+                    dgvProducts.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);
                 }
             }
             catch (Exception ex)
@@ -124,11 +125,11 @@ namespace form_up_0102
                 priceText = $"Цена {product.Price:C}";
             }
             return $"Категория товара: {product.Description}| {product.ProductType}" + Environment.NewLine +
-                $"Информация о производителе:{product.Manufacturer}" + Environment.NewLine +
-                $"Поставщик:{product.Supplier.SupplierName}" + Environment.NewLine +
-                $"Цена товара:{priceText}" + Environment.NewLine +
-                $"Еденица измерения:{product.Measure.MeasureName}" + Environment.NewLine +
-                $"Количество на складе:{product.CointInStock}";
+                $"Информация о производителе: {product.Manufacturer.ManufacturerName}" + Environment.NewLine +
+                $"Поставщик: {product.Supplier.SupplierName}" + Environment.NewLine +
+                $"Цена товара: {priceText}" + Environment.NewLine +
+                $"Еденица измерения: {product.Measure.MeasureName}" + Environment.NewLine +
+                $"Количество на складе: {product.CointInStock}";
         }
 
         private Image LoadProductImage(string photoUrl)
