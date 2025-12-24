@@ -15,11 +15,11 @@ namespace form_up_0102
                 {
                     if (formLogin.ShowDialog() == DialogResult.OK)
                     {
-                        using (var formProducts = new FormProducts(
+                        using (var formMenu = new formMenu(
                             formLogin.CurretUser,
                             formLogin.IsGuest))
                         {
-                            if (formProducts.ShowDialog() == DialogResult.Cancel)
+                            if (formMenu.ShowDialog() == DialogResult.Cancel)
                             {
                                 continue;
                             }
@@ -27,8 +27,8 @@ namespace form_up_0102
                             {
                                 exitProgram = true;
                             }
-                        }
-                        ;
+                        };
+                        
                     }
                     else
                     {

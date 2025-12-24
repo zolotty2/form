@@ -20,18 +20,18 @@ namespace form_up_0102
         {
             InitializeComponent();
             var colPhoto = new DataGridViewImageColumn();
-            colPhoto.Name = "colPhoto";
+            colPhoto.Name = "Фото товара";
             colPhoto.ImageLayout = DataGridViewImageCellLayout.Zoom;
             colPhoto.Width = 200;
             colPhoto.FillWeight = 30;
 
             var colInfo = new DataGridViewTextBoxColumn();
-            colInfo.Name = "colInfo";
+            colInfo.Name = "Информация о товаре";
             colInfo.FillWeight = 60;
             colInfo.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             var colDiscount = new DataGridViewTextBoxColumn();
-            colDiscount.Name = "colDiscount";
+            colDiscount.Name = "Скидка";
             colDiscount.FillWeight = 60;
             colDiscount.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
@@ -42,7 +42,7 @@ namespace form_up_0102
             CurretUser = user;
             IsGuest = IsGuest;
 
-            lblUserName.Text = IsGuest ? "гость" : CurretUser.fullName;
+            lblUserName.Text = IsGuest ? "Гость" : CurretUser.fullName;
             LoadProducts();
         }
 
@@ -67,12 +67,12 @@ namespace form_up_0102
                         int rowIndex = dgvProducts.Rows.Add();
                         var row = dgvProducts.Rows[rowIndex];
 
-                        row.Cells["colPhoto"].Value = LoadProductImage(product.PhotoUrl);
+                        row.Cells["Фото товара"].Value = LoadProductImage(product.PhotoUrl);
 
-                        row.Cells["colInfo"].Value = FormatProductInfo(product);
+                        row.Cells["Информация о товаре"].Value = FormatProductInfo(product);
 
-                        row.Cells["colDiscount"].Value = $"{product.Discount}%";
-                        row.Cells["colDiscount"].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                        row.Cells["Скидка"].Value = $"{product.Discount}%";
+                        row.Cells["Скидка"].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                         ApplyRowStyles(row, product);
                     }
                     dgvProducts.ResumeLayout();
@@ -95,7 +95,7 @@ namespace form_up_0102
             }
             if (product.CointInStock <= 0)
             {
-                row.DefaultCellStyle.ForeColor = Color.LightBlue;
+                row.DefaultCellStyle.BackColor = Color.LightBlue;
 
                 if (product.Discount <= 15)
                 {
@@ -104,8 +104,8 @@ namespace form_up_0102
             }
             if (product.Discount > 0)
             {
-                row.Cells["colDiscount"].Style.ForeColor = Color.Red;
-                row.Cells["colDiscount"].Style.Font = new Font(
+                row.Cells["Скидка"].Style.ForeColor = Color.Red;
+                row.Cells["Скидка"].Style.Font = new Font(
                     "Times New Roman",
                     12,
                     FontStyle.Bold);
@@ -152,11 +152,16 @@ namespace form_up_0102
         private void btnLogout_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
-            this.Close();  
+            this.Close();
         }
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             base.OnFormClosed(e);
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
